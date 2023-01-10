@@ -2,8 +2,9 @@ name: 'Get parameter'
 description: 'Greet someone'
 inputs:
   message:
-    description: 'Message to parse'
-    required: true
+    description: 'Message to parse. Defaults to head commit message'
+    required: false
+    default: ${{ github.event.head_commit.message }}
   parameter-0:  # id of input
     description: 'Name of the first parameter to get'
     required: true
@@ -26,15 +27,15 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: echo ${{ github.event.head_commit.message }} | sed -n "s/^<\([^>]*\)>.*$/\1/p" | awk '{print "parameters="$1}'  >> $GITHUB_OUTPUT
+    - run: echo ${{ inputs.message }} | sed -n "s/^<\([^>]*\)>.*$/\1/p" | awk '{print "parameters="$1}' >> $GITHUB_OUTPUT
       id: extracted
       shell: sh
-    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-0 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -o ${{ inputs.parameter-0 }} || true | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-0
       shell: sh
-    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-1 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -o ${{ inputs.parameter-1 }} || true | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-1
       shell: sh
-    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-2 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -o ${{ inputs.parameter-2 }} || true | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-2
       shell: sh
