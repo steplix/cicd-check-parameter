@@ -1,0 +1,36 @@
+name: 'Get parameter'
+description: 'Greet someone'
+inputs:
+  message:
+    description: 'Message to parse'
+    required: true
+  parameter-0:  # id of input
+    description: 'Name of the first parameter to get'
+    required: true
+  parameter-1:  # id of input
+    description: 'Name of the second parameter to get'
+    required: false
+  parameter-2:  # id of input
+    description: 'Name of the third parameter to get'
+    required: false
+outputs:
+  parameter-0:
+    description: "Value of first parameter to get"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+  parameter-1:
+    description: "Value of first parameter to get"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+  parameter-2:
+    description: "Value of first parameter to get"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo ${{ github.event.head_commit.message }} | sed -n "s/^<\([^>]*\)>.*$/\1/p" | awk '{print "parameters="$1}'  >> $GITHUB_OUTPUT
+      id: extracted
+    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-0 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+      id: value-0
+    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-1 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+      id: value-1
+    - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-2 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+      id: value-2
