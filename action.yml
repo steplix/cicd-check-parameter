@@ -28,9 +28,13 @@ runs:
   steps:
     - run: echo ${{ github.event.head_commit.message }} | sed -n "s/^<\([^>]*\)>.*$/\1/p" | awk '{print "parameters="$1}'  >> $GITHUB_OUTPUT
       id: extracted
+      shell: sh
     - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-0 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-0
+      shell: sh
     - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-1 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-1
+      shell: sh
     - run: echo ${{ steps.extracted.outputs.parameters }} | grep -Po ${{ inputs.parameter-2 }} | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-2
+      shell: sh
