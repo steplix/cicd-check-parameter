@@ -30,12 +30,12 @@ runs:
     - run: echo "${{ inputs.message }}" | sed -n "s/^<\([^>]*\)>.*$/\1/p" | awk '{print "parameters="$1}' >> $GITHUB_OUTPUT
       id: extracted
       shell: sh
-    - run: echo "${{ steps.extracted.outputs.parameters }}" | grep -o "${{ inputs.parameter-0 }}" || true | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+    - run: echo "${{ steps.extracted.outputs.parameters }}" | grep -o "${{ inputs.parameter-0 }}" | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-0
       shell: sh
-    - run: echo "${{ steps.extracted.outputs.parameters }}" | grep -o "${{ inputs.parameter-1 }}" || true | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+    - run: echo "${{ steps.extracted.outputs.parameters }}" | grep -o "${{ inputs.parameter-1 }}" | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-1
       shell: sh
-    - run: echo "${{ steps.extracted.outputs.parameters }}" | grep -o "${{ inputs.parameter-2 }}" || true | awk '{print "value="$1}' >> $GITHUB_OUTPUT
+    - run: echo "${{ steps.extracted.outputs.parameters }}" | grep -o "${{ inputs.parameter-2 }}" | awk '{print "value="$1}' >> $GITHUB_OUTPUT
       id: value-2
       shell: sh
