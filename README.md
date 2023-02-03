@@ -4,7 +4,7 @@ Github action to checking pipelines parameters
 
 ```yaml
 jobs:
-    check-parameters:
+  check-parameters:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

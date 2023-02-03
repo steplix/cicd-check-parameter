@@ -4,7 +4,8 @@
   "description": "Github action to checking pipelines parameters",
   "main": "src/index",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "package": "ncc build --source-map --license licenses.txt"
   },
   "homepage": "https://github.com/steplix/cicd-check-parameter#readme",
   "repository": {
@@ -19,5 +20,8 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.1"
   }
 }
