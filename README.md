@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Check parameters
-        uses: steplix/cicd-get-parameter@v1.0.0
+        uses: steplix/cicd-get-parameter@1.0.0
         id: args
         with:
           param-0: minor
